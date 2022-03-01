@@ -1,0 +1,128 @@
+library(lmerTest)
+library(ggplot2)
+
+rm(list=ls())
+
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20210909-1416-alchemy2-valuedifferences-human-1.csv")
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20211124-1433-alchemy2-valuedifferences-base-1.csv")
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20211124-1504-alchemy2-valuedifferences-cbu-1.csv")
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20211124-1527-alchemy2-valuedifferences-emp-1.csv")
+la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20211202-1155-alchemy2-valuedifferences-bin-1.csv")
+
+la2small<-subset(la2, trial<200)
+
+# la2df<-data.frame(trial=scale(la2$trial),
+#                   id=paste(la2$id), 
+#                   cbu=scale(la2$delta_cbu),
+#                   emp=scale(la2$delta_emp),
+#                   bin=scale(la2$delta_bin),
+#                   cbv=scale(la2$delta_cbv),
+#                   decision=la2$decision)
+
+la2dfsmall<-data.frame(trial=scale(la2small$trial),
+                  id=paste(la2small$id), 
+                  cbu=scale(la2small$delta_cbu),
+                  emp=scale(la2small$delta_emp),
+                  bin=scale(la2small$delta_bin),
+                  cbv=scale(la2small$delta_cbv),
+                  decision=la2small$decision)
+
+#la2df_fullregression<-glmer(decision~-1+cbu+emp+trial+trial*cbu+trial*emp+(1|id), family='binomial', data=la2df, nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+#la2df_fullregression_summary<-summary(la2df_fullregression)
+#la2df_fullregression_summary
+
+#important for cbu dataset, also change cbu to cbu2 in regression when using the cbu dataset
+la2dfsmall$cbu2 <- la2dfsmall$cbu + rnorm(nrow(la2dfsmall),0,0.05)
+
+la2dfsmall_fullregression<-glmer(decision~-1+emp+bin+cbu+trial+trial*cbu+trial*emp+trial*bin+(1|id), family='binomial', data=la2dfsmall, nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+la2dfsmall_fullregression_summary<-summary(la2dfsmall_fullregression)
+la2dfsmall_fullregression_summary
+
+#la2dfsmall_partregression<-glmer(decision~-1+emp+cbu+trial+trial*cbu+trial*emp+(1|id), family='binomial', data=la2dfsmall, nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+#la2dfsmall_partregression_summary<-summary(la2dfsmall_partregression)
+#la2dfsmall_partregression_summary
+
+
+la2dfsmall_fullregression_m<-la2dfsmall_fullregression_summary$coefficients[1:3,1]
+la2dfsmall_fullregression_se<-la2dfsmall_fullregression_summary$coefficients[1:3,2]
+
+dataforplot_la2dfsmall_fullregression<-data.frame(mu=la2dfsmall_fullregression_m, ci=1.96*la2dfsmall_fullregression_se, 
+               model=rep(c('Empowerment', 'Binary', 'Uncertainty')))
+
+
+#limits with 95% CIs
+limits <- aes(ymax = mu + ci, ymin= mu - ci)
+
+#plot
+plot_la2dfsmall_fullregression <- ggplot(dataforplot_la2dfsmall_fullregression, aes(x=model, y=mu)) + 
+  #bars
+  geom_bar(position="dodge", stat="identity", width=0.6)+
+  #error bars
+  geom_errorbar(limits, position="dodge", width=0.25)+
+  #points
+  geom_point(size=3)+
+  #color
+  #scale_fill_manual(values = c(cbPalette))+
+  #theme
+  theme_minimal() +
+  #limits
+  #scale_y_continuous(limits = c(0,100), expand = c(0, 0)) +
+  #labs
+  xlab("Model")+
+  ylab(expression(beta))+
+  #title
+  ggtitle("")+
+  #adjust text size
+  theme(text = element_text(size=21,  family="sans"))+
+  #no legend
+  theme(legend.position = "none")
+
+plot_la2dfsmall_fullregression
+
+
+
+
+## BOTTOM UP ANALYSIS
+# get model with single models as fixed effect
+me <- glmer(decision ~ -1 + emp + trial + trial*emp + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(me)
+
+mv <- glmer(decision ~ -1 + cbv + trial + trial*cbv + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(mv)
+
+mb <- glmer(decision ~ -1 + bin + trial + trial*bin + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(mb)
+
+mu <- glmer(decision ~ -1 + cbu + trial + trial*cbu + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(mu)
+
+# get model with empowerment and binary as fixed effect
+meb <- glmer(decision ~ -1 + emp + bin + trial + trial*emp + trial*bin + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(meb)
+
+# get model with empowerment and CBU as fixed effect
+meu <- glmer(decision ~ -1 + emp + cbu + trial + trial*emp + trial*cbu + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(meu)
+
+# get model with binary and CBU as fixed effect
+mub <- glmer(decision ~ -1 + bin + cbu + trial + trial*bin + trial*cbu + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(mub)
+
+# get model with empowerment and binary and CBU as fixed effect
+meub <- glmer(decision ~ -1 + emp + bin + cbu + trial + trial*emp + trial*bin + trial*cbu + (1 | id), data=la2df, family="binomial", nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(meub)
+
+# compare models
+anova(me, meb)
+anova(mb, meb)
+anova(me, meu)
+anova(mu, meu)
+anova(mb, mub)
+anova(mu, mub)
+anova(mub, meub)
+anova(meu, meub)
+anova(meb, meub)
+
+emponbin <- lmer(emp ~ -1 + bin + (1|id), data = la2df)
+summary(emponbin)
+

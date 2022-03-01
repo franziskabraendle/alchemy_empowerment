@@ -1,0 +1,11 @@
+pandas==1.0.5
+seaborn==0.11.0
+numpy==1.19.3
+scipy==1.5.0
+~atplotlib==3.2.2
+tensorflow_docs==0.0.0fb9009c3d4e2befd0500d05a139a63a94a067772_
+gensim==3.8.3
+tensorflow==2.4.0
+config==0.5.0.post0
+matplotlib==3.3.3
+scikit_learn==0.24.0
