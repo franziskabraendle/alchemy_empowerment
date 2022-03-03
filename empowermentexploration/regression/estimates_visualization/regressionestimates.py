@@ -5,7 +5,7 @@ import seaborn as sns
 mpl.use('Agg')
 
 # set game version
-game_version = 'tinyalchemy'
+game_version = 'tinypixels'
 
 # set general settings for plotting
 # TODO: change font to Open Sans
@@ -53,7 +53,7 @@ plt.xlabel('Models')
 axes = plt.gca()
 change_width(axes, .58)
 if game_version == 'tinyalchemy' or game_version == 'tinypixels':
-    axes.set_ylim([-0.1,0.4])
+    axes.set_ylim([-0.15,0.4])
 plt.tight_layout()
 
 # save plot

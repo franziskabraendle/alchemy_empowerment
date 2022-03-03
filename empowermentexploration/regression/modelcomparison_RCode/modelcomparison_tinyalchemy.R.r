@@ -101,3 +101,19 @@ plot_tadf_fullregression
 # emponbin <- lmer(emp ~ -1 + bin + (1|id), data = tadf)
 # summary(emponbin)
 # 
+
+
+#comparison of empowerment and uncertainty
+
+emp_df <- subset(tadf, select=c("emp","decision", "id", "trial"))
+emp_df$empmodel <- 1
+names(emp_df)[names(emp_df) == "emp"] <-"modelestimate"
+
+cbu_df <- subset(tadf, select=c("cbu","decision", "id", "trial"))
+cbu_df$empmodel <- 0
+names(cbu_df)[names(cbu_df) == "cbu"] <-"modelestimate"
+
+concatenated_df<-rbind(emp_df,cbu_df)
+concatenated_df_fullregression<-glmer(decision~-1+modelestimate+modelestimate*empmodel+trial+trial*modelestimate+(1|id), family='binomial', data=concatenated_df, nAGQ=0, control=glmerControl(optimizer = "nloptwrap"))
+summary(concatenated_df_fullregression)
+

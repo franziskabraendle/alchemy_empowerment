@@ -32,7 +32,7 @@ This will allow you to edit the source code.
 Run models with
 `python -m empowermentexploration.models`
 
-Run models on human data with 
+Run models on human data with
 `python -m empowermentexploration.human`
 
 Run gametrees with
@@ -42,10 +42,8 @@ Run gametrees with
 
 ## Development
 
-## Contribute
-Pull requests and suggestions for adjustments are welcome. You can contact me via l.stocks@gmx.de.
-
 ## Credits
-This project was created together with Franziska Brändle and Eric Schulz. Thank you for all your support!
+For any additional information contact me via franziska.braendle@tuebingen.mpg.de.
+The code was written by Lena Stocks and Franziska Brändle. This project was created together with Eric Schulz. Thank you for all your support!
 
-MIT © Lena Stocks
+MIT © Lena Stocks, Franziska Brändle
