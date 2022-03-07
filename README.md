@@ -1,46 +1,23 @@
 # Exploration as Empowerment
 
-Master thesis project at the CPI lab in Tübingen, GER.
-
-## Table of Contents
-
-## Motivation
+Project at the Computational Principles for Intelligence lab in Tübingen, GER.
+This code and data can be used to replicate the results from "Intrinsically Motivated Exploration as Empowerment" by Brändle, Stocks, Tenenbaum, Gershman and Schulz.
 
 ## Installation
-You can use a virtual environment.
+Install the requirements from "requirements.txt".
 
-1. Install virtualenv
-`py -m pip install --user virtualenv`
-
-2. Create a virtual environment
-`py -m venv env`
-
-3. Activate environment
-`.\env\Scripts\activate`
-
-3.1 Now that the virtual environment is all set, install requirements:
-`pip install -r requirements.txt`
-
-3.2 Run
-`python setup.py develop`
-This will allow you to edit the source code.
-
-4. Deactivate virtual environment with
-`deactivate`
+## data
+Most behavioral data and generated data necessary to exactly replicate the results from the paper can be found at https://keeper.mpdl.mpg.de/d/28c50dc3a6bf4d10995d/ . Copy all the folders labeled "data" in the respective sub folders. Additionally copy the folder "fastText" into the resources subfolder.
+The behavioral data of the ~29000 participants of the original game can be shared upon reasonable request by contacting me via "franziska.braendle@tuebingen.mpg.de"
 
 ## Usage
 Run models with
 `python -m empowermentexploration.models`
 
-Run models on human data with
-`python -m empowermentexploration.human`
-
 Run gametrees with
 `python -m explorationempowerment.gametree`
 
-## Tests
-
-## Development
+More detailed instructions will follow in the near future.
 
 ## Credits
 For any additional information contact me via franziska.braendle@tuebingen.mpg.de.
