@@ -5,7 +5,7 @@ import seaborn as sns
 mpl.use('Agg')
 
 # set game version
-game_version = 'tinypixels'
+game_version = 'alchemy2'
 
 # set general settings for plotting
 # TODO: change font to Open Sans
@@ -23,16 +23,17 @@ else:
 
 # plot barplot
 if game_version == 'alchemy2':
-    #plt.errorbar(x=['empowerment', 'uncertainty'], y=[0.248022, 0.888754], yerr = [1.96*0.004628, 1.96*0.005257], color = '#444444', fmt='none', elinewidth=3)
-    #g = plt.bar(x=['empowerment', 'uncertainty'], height=[0.248022, 0.888754], color=['#ffc640', '#0c2e8a'])
-    plt.errorbar(x=['empowerment', 'uncertainty'], y=[0.3776, 0.2233], yerr = [1.96*0.001024, 1.96*0.001091], color = '#444444', fmt='none', elinewidth=3)
-    g = plt.bar(x=['empowerment', 'uncertainty'], height=[0.3776, 0.2233], color=['#0c2e8a','#ff796c'])
+    #values from regression 24.8.2022 gametree from 8.5.
+    plt.errorbar(x=['empowerment', 'uncertainty'], y=[0.3780, 0.2232], yerr = [1.96*0.0010, 1.96*0.0011], color = '#444444', fmt='none', elinewidth=3)
+    g = plt.bar(x=['empowerment', 'uncertainty'], height=[0.3780, 0.2232], color=['#0c2e8a','#ff796c'])
+#from combined analysis:
 elif game_version == 'tinyalchemy': #values from 11.10.2021
-    plt.errorbar(x=['empowerment', 'uncertainty'], y=[0.322388, 0.100159], yerr = [1.96*0.010213, 1.96*0.010232], color = '#444444', fmt='none', elinewidth=3)
-    g = plt.bar(x=['empowerment', 'uncertainty'], height=[0.322388, 0.100159], color=['#0c2e8a','#ff796c'])
+    plt.errorbar(x=['empowerment', 'uncertainty'], y=[0.302234, 0.090041], yerr = [1.96*0.010184, 1.96*0.010168], color = '#444444', fmt='none', elinewidth=3)
+    g = plt.bar(x=['empowerment', 'uncertainty'], height=[0.302234, 0.090041], color=['#0c2e8a','#ff796c'])
 elif game_version == 'tinypixels': #values from 11.10.2021
-    plt.errorbar(x=['empowerment', 'uncertainty'], y=[-0.109565, 0.080353], yerr = [1.96*0.016336, 1.96*0.016749], color = '#444444', fmt='none', elinewidth=3)
-    g = plt.bar(x=['empowerment', 'uncertainty'], height=[-0.109565, 0.080353], color=['#0c2e8a','#ff796c'])
+    plt.errorbar(x=['empowerment', 'uncertainty'], y=[-0.045266, 0.085747], yerr = [1.96*0.016705, 1.96*0.020103], color = '#444444', fmt='none', elinewidth=3)
+    g = plt.bar(x=['empowerment', 'uncertainty'], height=[-0.045266, 0.085747], color=['#0c2e8a','#ff796c'])
+
 
 #function for changing width of bars
 def change_width(ax, new_value) :

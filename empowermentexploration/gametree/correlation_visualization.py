@@ -7,11 +7,14 @@ import seaborn as sns
 import time as ti
 import statsmodels.api as sm
 import scipy.stats as st
+import time
 
 import random
 
 import empowermentexploration.utils.data_handle as data_handle
 import empowermentexploration.utils.helpers as helpers
+
+time = time.strftime('%Y%m%d-%H%M')
 
 # tinyalchemy, tinypixels, littlealchemy
 game_version = 'alchemy2'
@@ -37,8 +40,6 @@ empowerment_table = pd.DataFrame(index, columns= ['index'])
 empowerment_table["emp_value_predicted"] = empvalues
 empowerment_table["element_string"] = translation
 
-p = open("D:/LittleAlchemyCode_20210831/empowerment-main/empowermentexploration/resources/littlealchemy/data/tinyalchemyParentTable.json",)
-parenttable = json.load(p)
 parenttable = data_handle.get_parent_table(version=game_version)
 print(len(parenttable))
 emp_list = []
@@ -99,7 +100,7 @@ ax_histy.hist(y, bins=binsy, color = '#0c2e8a', orientation='horizontal')
 ax_histy.set(xlabel='count')
 ax_histx.set_xlim(ax_scatter.get_xlim())
 ax_histy.set_ylim(ax_scatter.get_ylim())
-plt.show()
-plt.savefig('empowermentexploration/data/gametree/figures/EmpowermentValuesCorrelation{}.pdf'.format(game_version))
-plt.savefig('empowermentexploration/data/gametree/figures/EmpowermentValuesCorrelation{}.png'.format(game_version))
-plt.savefig('empowermentexploration/data/gametree/figures/EmpowermentValuesCorrelation{}.svg'.format(game_version))
+#plt.show()
+plt.savefig('empowermentexploration/data/gametree/figures/{}-EmpowermentValuesCorrelation{}.pdf'.format(time, game_version))
+plt.savefig('empowermentexploration/data/gametree/figures/{}-EmpowermentValuesCorrelation{}.png'.format(time, game_version))
+plt.savefig('empowermentexploration/data/gametree/figures/{}-EmpowermentValuesCorrelation{}.svg'.format(time, game_version))

@@ -15,8 +15,8 @@ def cohen_d(x,y):
     return (mean(x) - mean(y)) / sqrt(((nx-1)*std(x, ddof=1) ** 2 + (ny-1)*std(y, ddof=1) ** 2) / dof)
 
 
-tinyalchemy_data = data_handle.get_player_data("tinyalchemy", "Memory")
-tinypixels_data = data_handle.get_player_data("tinypixels", "Memory")
+tinyalchemy_data = data_handle.get_player_data("tinyalchemy", memory=True)
+tinypixels_data = data_handle.get_player_data("tinypixels", memory=True)
 
 
 ta_grouped = tinyalchemy_data.groupby('id')
@@ -25,12 +25,16 @@ ta_inventory_sizes = ta_grouped['inventory'].max()
 tp_inventory_sizes = tp_grouped['inventory'].max()
 
 
-
+print("inventory")
 print(ssw.ttest_ind(ta_inventory_sizes, tp_inventory_sizes))
 print(cohen_d(ta_inventory_sizes, tp_inventory_sizes))
-ta_trials = ta_grouped['trial'].max().to_numpy()
-tp_trials = tp_grouped['trial'].max().to_numpy()
 
+
+ta_trials = ta_grouped['trial'].max()#.to_numpy()
+tp_trials = tp_grouped['trial'].max()#.to_numpy()
+print(ta_trials)
+
+print("trials")
 print(ssw.ttest_ind(ta_trials, tp_trials))
 print(cohen_d(ta_trials, tp_trials))
 #correct if the population S.D. is expected to be equal for the two groups.

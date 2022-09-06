@@ -3,8 +3,14 @@ rm(list=ls())
 
 
 humdata<-read.csv("..\\..\\..\\..\\empowermentexploration\\resources\\playerdata\\data\\alchemy2HumanDataMemory.csv")
+#humdata<-read.csv("..\\..\\..\\..\\empowermentexploration\\resources\\playerdata\\data\\tinyalchemyHumanDataMemory.csv")
+#humdata<-read.csv("..\\..\\..\\..\\empowermentexploration\\resources\\playerdata\\data\\tinypixelsHumanDataMemory.csv")
+
 sortedhumdata<-humdata[order(humdata$id,-humdata$trial),]
 maxvalues <- sortedhumdata[!duplicated(sortedhumdata$id),]                  
+
+#check how many people play over certain number of trials and find over a certain number of elements. 
+# numbers in comments are results for la2
 
 sum(maxvalues$trial>10)  #24719 
 sum(maxvalues$trial>50)   #15622
@@ -26,3 +32,10 @@ sum(maxvalues$inventory>500) #177
 sum(maxvalues$inventory>600) #88
 sum(maxvalues$inventory>700) #33
 which(maxvalues$inventory>719) #9 #meaning 9 people found all 720 elements. 
+
+mean(maxvalues$trial)
+sd(maxvalues$trial)
+
+mean(maxvalues$inventory)
+sd(maxvalues$inventory)
+var(maxvalues$inventory)

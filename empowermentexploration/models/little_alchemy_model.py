@@ -11,7 +11,6 @@ from empowermentexploration.models.truebin_model import TrueBinModel
 from empowermentexploration.models.trueemp_model import TrueEmpModel
 from empowermentexploration.models.visualization import Visualization
 
-
 class LittleAlchemyModel():
     """Model that plays the game Little Alchemy 2.
     """
@@ -118,6 +117,7 @@ class LittleAlchemyModel():
                 print('\nRun {} simulations for temperature value {}.'.format(self.runs, temperature_value))
 
                 for run in range(self.runs):
+
                     # reset inventories: one only holds usable elements and no final elements, the other one tracks all elements
                     inventory.reset()
 
@@ -176,6 +176,7 @@ class LittleAlchemyModel():
             return CBVModel(self.game_version, self.memory_type)
         elif model_type == 'cbu':
             return CBUModel(self.game_version, self.memory_type)
+
         else:
             raise ValueError('Undefined model version: "{}". Use "base", "cbv",\
                 "cbu", "sim", "bin", "emp", "truebin" or "trueemp" instead.'.format(model_type))

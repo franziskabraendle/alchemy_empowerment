@@ -2,11 +2,11 @@ import numpy as np
 import math
 
 
-class CBUModel():
-    """Count-based uncertainty model.
+class RecencyModel():
+    """Recency model. Values based on number of trials since the element was last used.
     """
     def __init__(self, game_version):
-        """Initializes a little alchemy count-based uncertainty model.
+        """Initializes a little alchemy recency model.
 
         Args:
             game_version (str): game_version (str, optional): 'joined', 'alchemy1', 'alchemy2', 'tinyalchemy' or 'tinypixels.
@@ -21,7 +21,7 @@ class CBUModel():
             self.n_elements = 720
 
     def get_value(self, combination):
-        """Returns uncertainty value for given combination.
+        """Returns recency value for given combination.
 
         Args:
             combination (list): List of element indices that are involved in combination.
@@ -36,7 +36,7 @@ class CBUModel():
         """
         self.values_elements = np.zeros(self.n_elements)
         self.total_count = 1
-        self.element_count = np.ones(self.n_elements)
+        self.element_lastused = np.zeros(self.n_elements)
 
     def update_model_specifics(self, chosen_combination, results):
         """Updates model specifics.
@@ -48,8 +48,9 @@ class CBUModel():
                         (2) new_results_total (list): List of all new element indices that resulted from combination.
         """
         self.total_count += 1
-        self.element_count[chosen_combination[0]] += 1
-        self.element_count[chosen_combination[1]] += 1
+        self.element_lastused += 1
+        self.element_lastused[chosen_combination[0]] = 0
+        self.element_lastused[chosen_combination[1]] = 0
 
         for i in range(self.n_elements):
-            self.values_elements[i] = math.sqrt(math.log(self.total_count)/self.element_count[i])
+            self.values_elements[i] = (self.element_lastused[i]) / (self.total_count)

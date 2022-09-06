@@ -63,6 +63,10 @@ class Visualization():
             color = '#6ab8d9'
         elif self.model_type == 'sim':
             color = '#bf3409'
+        elif self.model_type == 'binandcbu':
+            color = '#bf3409'
+
+
         color = c.to_rgba(color)
         self.colors = [color]
         if temperatures is not None and len(temperatures) > 1:
@@ -181,7 +185,7 @@ class Visualization():
         # read in model data
         for model_type in self.model_type:
             # plot human line eralier in case of special model arrangement
-            if human is True and np.all(self.model_type == ['base','cbu', 'truebin', 'trueemp']) and model_type == 'truebin':
+            if human is True and np.all(self.model_type == ['base','cbu', 'truebin', 'trueemp','binandcbu']) and model_type == 'truebin':
                 # set color
                 colors = ['#82cafc', '#d9effe']
 
@@ -225,6 +229,8 @@ class Visualization():
                 colors = ['#6ab8d9', '#a9d6e9']
             elif model_type == 'sim':
                 colors = ['#bf3409', '#f55422']
+            elif model_type == 'binandcbu':
+                colors = ['#bf3409', '#f55422']
 
             # set empowerment_calculation
             if model_type == 'trueemp':
@@ -233,12 +239,12 @@ class Visualization():
                 empowerment_calculation = value_calculation[1]
             elif model_type in ['truebin']:
                 empowerment_calculation = value_calculation[2]
-            elif model_type in ['bin']:
+            elif model_type in ['bin','binandcbu']:
                 empowerment_calculation = value_calculation[3]
             else:
                 empowerment_calculation = ['placeholder']
             for e_c in empowerment_calculation:
-                if model_type in ['trueemp', 'emp', 'bin', 'truebin']:
+                if model_type in ['trueemp', 'emp', 'bin', 'truebin','binandcbu']:
                     data = data_handle.get_gameprogress_data(self.time, self.game_version, '{}-{}'.format(model_type, e_c), self.memory_type)
                 else:
                     data = data_handle.get_gameprogress_data(self.time, self.game_version, model_type, self.memory_type)

@@ -11,7 +11,7 @@ if __name__ == '__main__':
     game_version = 'alchemy2'
 
     # set list of models that are to be run: 'base', 'cbv', 'cbu', 'sim', 'bin' 'emp', 'truebin', 'trueemp'
-    models = ['bin']
+    models = ['emp']
 
     # set value calculation
     # tuple contains first list of calculation info on trueemp, then emp, then truebin, then and bin
@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     # set number of runs and steps
     runs = 1000
-    steps = 200
+    steps = 1000 #200
 
     # set memory type: 0, 1, 2
     memory_type = 1

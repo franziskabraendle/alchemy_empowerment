@@ -1,7 +1,8 @@
 import empowermentexploration.utils.data_handle as data_handle
+import numpy as np
 
 
-class BinModel():
+class EmpdirectModel():
     """Binary model based on self-constructed game tree.
     """
     def __init__(self, game_version='alchemy2', split_version='data', vector_version='crawl300'):
@@ -18,10 +19,16 @@ class BinModel():
         """
         # TODO: offer dynamic calculation
         # get empowerment info
-        self.binary_info = data_handle.get_probability_table(game_version, split_version, vector_version)
-        #self.binary_info = self.binary_info[['predSuccess', 'predResult']]
-        self.binary_info = self.binary_info[['predSuccess']]
-        
+        self.empdirect_info = data_handle.get_probability_table(game_version, split_version, vector_version)
+        print(self.empdirect_info.head(20))
+        #print((self.empdirect_info[['predEmp']]).corr(self.empdirect_info[['predSuccess']]))
+        emptest=self.empdirect_info['predEmp']
+        bintest=self.empdirect_info['predSuccess']
+        print(emptest)
+        print(bintest)
+        print(emptest.corr(bintest))
+        self.empdirect_info = self.empdirect_info[['predEmp']]
+
     def get_value(self, combination):
         """Returns combination binary value.
 
@@ -32,9 +39,9 @@ class BinModel():
             float: Value.
         """
         # get all probabilities for this combination
-        predicted_success = self.binary_info.loc[tuple(combination),:]
+        predicted_directemp = self.empdirect_info.loc[tuple(combination),:]
 
         # get empowerment value for combination
-        binary = predicted_success['predSuccess']
+        directemp = predicted_directemp['predEmp']
 
-        return binary
+        return directemp

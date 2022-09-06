@@ -12,11 +12,20 @@ if __name__ == '__main__':
     memory_type = 1
 
     # set game version: alchemy1, alchemy2, tinypixels, tinyalchemy
-    game_version = 'tinyalchemy'
+    game_version = 'alchemy2'
 
     # set vector version
     split_version = 'data'
     vector_version = 'crawl300'
+
+    #set empowerment version to 'elements' for original calculation and 'values' for model directly trained on empowerment values
+    #!!! Have to change empowerment file in resources/costumgametree/data to the one that should be used
+    emp_version = 'elements' # 'elements' or 'values'
+
+    #Do you want to match the random combinations to the success of the chosen combinations
+    matched = False
+
+    stepsused = None #None for using all
     # YOUR ACTION IS NOT RECQUIRED ANYMORE
 
     # set time stamp
@@ -27,7 +36,7 @@ if __name__ == '__main__':
 
     # load player data
     players = PlayerData(game_version, data_source=data_source, memory_type=memory_type)
-    players.get_player_subset(n_players=None, steps=None, seed=None)
+    players.get_player_subset(n_players=None, steps=stepsused, seed=None)
 
     # generate new dataframe with info on values of different model strategies
-    values = ModelValues(players.data, time, game_version, split_version, vector_version, data_source, memory_type, z_score=False)
+    values = ModelValues(players.data, time, game_version, split_version, vector_version, data_source, memory_type, matched, emp_version, z_score=False)

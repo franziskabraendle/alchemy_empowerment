@@ -119,6 +119,8 @@ def translate_model(model_type):
         model = 'empowerment (approx.)'
     elif model_type == 'trueemp':
         model = 'empowerment'
+    elif model_type == "binandcbu":
+        model = 'binary and uncertainty combined'
     else:
         raise ValueError('Undefined model version: "{}". Use "base", "cbv",\
                 "cbu", "sim", "bin", "emp", "truebin" or "trueemp" instead.'.format(model_type))

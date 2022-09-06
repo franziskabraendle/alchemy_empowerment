@@ -7,6 +7,8 @@ library(lsr)
 
 rm(list=ls())
 
+#test if number of trials and size of inventory is significantly different between tinyalchemy and tinypixels
+
 tinyalchemy<-read.csv("..\\..\\..\\..\\empowermentexploration\\resources\\playerdata\\data\\tinyalchemyHumanDataMemory.csv")
 tinypixels<-read.csv("..\\..\\..\\..\\empowermentexploration\\resources\\playerdata\\data\\tinypixelsHumanDataMemory.csv")
 
@@ -82,4 +84,7 @@ df_trials_tp <- data.frame(tp_trials)
 
 ttestPretty(x = df_inventory_ta$ta_inventory, y = df_inventory_tp$tp_inventory)
 ttestPretty(x = df_trials_ta$ta_trials, y = df_trials_tp$tp_trials)
-
+mean(df_trials_ta$ta_trials)
+mean(df_trials_tp$tp_trials)
+mean(df_inventory_ta$ta_inventory)
+mean(df_inventory_tp$tp_inventory)

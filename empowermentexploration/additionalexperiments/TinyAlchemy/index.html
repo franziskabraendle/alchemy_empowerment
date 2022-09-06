@@ -13,15 +13,15 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">   
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
-   
+
   <div class="container" >
 
     <div class="container" >
-    <!--First page contains Welcome-->   
+    <!--First page contains Welcome-->
      <div id="page1" style="display:block">
-       <h3><font FACE="bookman" color="#1c81bb"><b> Tiny Alchemy</b></font></h3>
+       <h3><font FACE="bookman" color="#1c81bb"><b>Tiny Alchemy</b></font></h3>
        <p> This study is part of a research project conducted by Eric Schulz. </p>
        <p> If you have any questions, please contact: <strong>eric.schulz@tuebingen.mpg.de</strong></p>
        <button type="button" class="btn btn-sm nohover" name="button"; onclick="clickStart('page1','page2')"; >Continue</button>
@@ -33,12 +33,11 @@
       <br>
          <p><b> Consent form:</b></p>
          <p>This study will ask you to perform a simple game in which you can discover elements by combining other elements.</p>
-         <p>You will be paid <b>$3 for your participation in this experiment.</b></p>
+         <p>You will be paid <b>$0.10 for every element you discover.</b></p>
          <p>You can play this game as long as you want.</p>
-         <p>We are interested in how much fun people have playing this game as well as how they attempt to discover elements.</p>
          <ul>
             <li>I have read and accept the terms and conditions listed above and consent to participate in this study. </li>
-            <li>I understand that I am free to withdraw from the study without penalty. </li> 
+            <li>I understand that I am free to withdraw from the study without penalty. </li>
             <li>I consent to the processing of my experimental data for the purposes of this study only. </li>
             <li>I understand that my information will be treated in accordance with the provisions of the <a target="_blank" href="http://www.gesetze-im-internet.de/englisch_bdsg">Data Privacy Act</a>.</li>
             <li>I understand that the information I have submitted will be published as part of a report.</li>
@@ -55,19 +54,17 @@
          <ul>
             <li>This game is called "Tiny Alchemy". It is your task to dicover elements.</li>
             <li>You can create elements by proposing experiments. Experiments let you combine two elements.</li>
-            <li>You start out with 4 base elements in your inventory. You can click on an element to add it to the current experiment. Once you are sure that you want to test a combination of two elements, you can click on "Let's find out".</li> 
+            <li>You start out with 4 base elements in your inventory. You can click on an element to add it to the current experiment. Once you are sure that you want to test a combination of two elements, you can click on "Let's find out".</li>
             <li>If the experiment did not create a new element, then nothing happens. If the experiments created a new element, then this element gets added to your inventory and you can use it for future experiments.</li>
             <li>It is your goal to create as many elements as possible. In principle, there are 520 elements you could discover. However, no one has ever discovered all of them.</li>
-            <li>You can play as long as you want (up to 5 hours) and we will pay you $3.00 flat for your participation.</li>
-            <li>We are interested in how long people play the game as well as in how they create new elements.</li>
+            <li>You can play as long as you want (up to 5 hours) and we will pay you $0.10 for every element in your final inventory.</li>
             <li>If you click on "I give up", the game ends, the number of elements in your inventory becomes your final score, and you will be directed to the next page.</li><br>
-            <li><b><font FACE="bookman" color="#1c81bb"><b>Note:</b></font> We know that --in theory-- you could just give up and get paid immediately. However, we trust you that you will play the game at least for some time, in particular if you enjoy it. </b></li>
          </ul>
       <br>
       <button type="button" class="btn btn-sm nohover" name="button"; onclick="clickStart('page3','page4')"; >Start playing</button>
     </div>
 
-    <!--First page contains Welcome-->   
+    <!--First page contains Welcome-->
      <div id="page4" style="display:none">
        <h3><font FACE="bookman" color="#1c81bb"><b>Current Experiment:</b></font></h3>
        <div id="exp" style="display:block"></div>
@@ -83,7 +80,7 @@
        </div>
        <h3><font FACE="bookman" color="#1c81bb"><b>Inventory:</b></font></h3>
        <div id="elements" style="display:block"></div><br><br><br>
-       <div id="button" align="right" style="display:none"><button type="button" class="btn btn-sm btn-outline-danger" onclick="clickStart('page4','page5')"; >I give up</button></div>
+       <div align="right"><button type="button" class="btn btn-sm btn-outline-danger" onclick="clickStart('page4','page5')"; >I give up</button></div>
        </div>
 
 

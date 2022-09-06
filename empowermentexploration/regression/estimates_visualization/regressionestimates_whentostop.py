@@ -23,12 +23,12 @@ else:
 
 # plot barplot
 if game_version == 'alchemy2':
-    plt.errorbar(x=['empowerment', 'success'], y=[0.407168,-0.297364], yerr = [1.96*0.009237, 1.96*0.009078], color = '#444444', fmt='none', elinewidth=3)
-    g = plt.bar(x=['empowerment', 'success'], height=[0.407168, -0.297364], color=['#0c2e8a','#ffc640'])
-elif game_version == 'tinyalchemy':  #emp significant 0.01. suc not
+    plt.errorbar(x=['empowerment', 'success'], y=[0.41545,-0.31173], yerr = [1.96*0.009721, 1.96*0.009506], color = '#444444', fmt='none', elinewidth=3)
+    g = plt.bar(x=['empowerment', 'success'], height=[0.41545,-0.31173], color=['#0c2e8a','#ffc640'])
+elif game_version == 'tinyalchemy':
     plt.errorbar(x=['empowerment', 'success'], y=[0.6431, -0.1213], yerr = [1.96*0.2394, 1.96*0.1415], color = '#444444', fmt='none', elinewidth=3)
     g = plt.bar(x=['empowerment', 'success'], height=[0.6431, -0.1213], color=['#0c2e8a','#ffc640'])
-elif game_version == 'tinypixels': #both not significant (suc a bit more with 0.1)
+elif game_version == 'tinypixels': 
     plt.errorbar(x=['empowerment', 'success'], y=[0.2686, 0.5173], yerr = [1.96*0.3432, 1.96*0.2868], color = '#444444', fmt='none', elinewidth=3)
     g = plt.bar(x=['empowerment', 'success'], height=[0.2686, 0.5173], color=['#0c2e8a','#ffc640'])
 

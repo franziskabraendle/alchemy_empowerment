@@ -286,11 +286,19 @@ class Behavior():
             for element in table:
                 empowerment[element] = len(table[element])
 
+            element_index = np.arange(self.n_elements)
+
             # initialize storage
             element_used = np.zeros(self.n_elements)
 
             # initialize element count
             element_found = np.zeros(self.n_elements)
+
+            #initialize mean trials
+            element_trial_average = np.zeros(self.n_elements)
+
+            #initialize mean number elements
+            element_inventory_average = np.zeros(self.n_elements)
 
             # iterate over all rows
             player_id = 0
@@ -307,6 +315,8 @@ class Behavior():
                     if elements != -1:
                         for element in elements:
                             element_found[element] += 1
+                            element_trial_average[element] = element_trial_average[element] + ((1/element_found[element])*(data[row-1][1]-element_trial_average[element]))
+                            element_inventory_average[element] = element_inventory_average[element] + ((1/element_found[element])*(data[row-1][2]-element_inventory_average[element]))
 
                             # check if element was used directly afterwards
                             if data[row][3] == element or data[row][4] == element:
@@ -314,88 +324,105 @@ class Behavior():
                 else:
                     player_id += 1
 
+            #delete never used elements
+            element_length = np.size(element_found, axis=0)
+
+            index_without_unused = np.array([])
+            element_found_without_unused = np.array([])
+            element_used_without_unused = np.array([])
+            empowerment_without_unused = np.array([])
+            trials_without_unused = np.array([])
+            inventory_without_unused = np.array([])
+
+            for element in range(element_length):
+                if element_found[element] != 0:
+                    element_found_without_unused = np.append(element_found_without_unused, element_found[element])
+                    element_used_without_unused = np.append(element_used_without_unused, element_used[element])
+                    empowerment_without_unused = np.append(empowerment_without_unused, empowerment[element])
+                    trials_without_unused = np.append(trials_without_unused, element_trial_average[element])
+                    inventory_without_unused = np.append(inventory_without_unused, element_inventory_average[element])
+                    index_without_unused = np.append(index_without_unused, element_index[element])
+            element_found = element_found_without_unused
+            element_used = element_used_without_unused
+            empowerment = empowerment_without_unused
+            element_trial_average = trials_without_unused
+            element_inventory_average = inventory_without_unused
+            element_index = index_without_unused
+
             # get percentage of immediate usage
             element_used_prob = np.nan_to_num(np.divide(element_used,element_found))
 
-            #empowerment_clean = empowerment
-            #element_used_prob_clean = element_used_prob
+            #clean empowerment from final elements directly visible in LA2
+
             empowerment_clean = np.array([])
+            element_used_clean = np.array([])
+            element_found_clean = np.array([])
             element_used_prob_clean = np.array([])
+            trials_clean = np.array([])
+            inventory_clean = np.array([])
+            element_index_clean = np.array([])
 
             if self.version == 'alchemy2':
 
                 for i in range(len(empowerment)):
                     if empowerment[i] != 0:
+                        element_index_clean = np.append(element_index_clean, element_index[i])
+                        element_found_clean = np.append(element_found_clean, element_found[i])
+                        element_used_clean = np.append(element_used_clean, element_used[i])
                         empowerment_clean = np.append(empowerment_clean, empowerment[i])
                         element_used_prob_clean = np.append(element_used_prob_clean, element_used_prob[i])
-            else:
-                for i in range(len(empowerment)):
-                    empowerment_clean = np.append(empowerment_clean, empowerment[i])
-                    element_used_prob_clean = np.append(element_used_prob_clean, element_used_prob[i])
-
-            element_used_prob_clean = np.delete(element_used_prob_clean, [0,1,2,3])
-            empowerment_clean = np.delete(empowerment_clean, [0,1,2,3])
-
-            #print(len(empowerment_clean))
-            #print(len(element_used_prob_clean))
-
-            #print(empowerment_clean)
-
-            #remove if you want to plot all values
-            empowerment = empowerment_clean
-            element_used_prob = element_used_prob_clean
+                        trials_clean = np.append(trials_clean, element_trial_average[i])
+                        inventory_clean = np.append(inventory_clean, element_inventory_average[i])
+                element_index = element_index_clean
+                empowerment = empowerment_clean
+                element_used_prob = element_used_prob_clean
+                element_trial_average = trials_clean
+                element_inventory_average = inventory_clean
+                element_used = element_used_clean
+                element_found = element_found_clean
 
             #create dataframe
-            x = np.log(empowerment+1)
-            x1 = empowerment
-            y = element_used_prob*100
+            elem_index = element_index
+            emp_log = np.log(empowerment+1)
+            emp_raw = empowerment
+            elem_found = element_found
+            elem_used = element_used
+            usage_prob = element_used_prob*100
+            tri_ave = element_trial_average
+            inv_ave = element_inventory_average
+
             df = pd.DataFrame()
-            df['x'] = pd.Series(x)
-            df['x1'] = pd.Series(x1)
-            df['y'] = pd.Series(y)
-
-
-
-            #print(len(df.x1))
-            #df = df.drop(df[df.x1 == 0].index)
-            #print(len(df.x1))
-            #df = df.drop(df[df.x1 == 53] & df[df.y==0].index)
-            #df = df.drop(df[df.x1 == 37] & df[df.y==0].index)
-            #df = df.drop(df[df.x1 == 36] & df[df.y==0].index)
-            #df = df.drop(df[df.x1 == 30] & df[df.y==0].index)
-
-            #delete rows and four initial n_elements
-
-
-            #x = df['x']
-            #x1 = df['x1']
-            #y = df['x']
+            df['elem_index'] = pd.Series(elem_index)
+            df['elem_found'] = pd.Series(elem_found)
+            df['elem_used'] = pd.Series(elem_used)
+            df['emp_log'] = pd.Series(emp_log)
+            df['emp_raw'] = pd.Series(emp_raw)
+            df['usage_prob'] = pd.Series(usage_prob)
+            df['tri_ave'] = pd.Series(tri_ave)
+            df['inv_ave'] = pd.Series(inv_ave)
 
             #write dataframe for R analysis
             time = ti.strftime('%Y%m%d-%H%M')
             filename_df_for_R = 'empowermentexploration/resources/playerdata/data/dataImUs/{}-{}-immediateusageWithoutLog-{}-{}.csv'.format(time, self.version, self.memory, d[1])
             df.to_csv(filename_df_for_R, index=False)
 
-            #calculate correlation1
-            #print(df.corr())
-            print(helpers.pearsonr_ci(df["x1"],df["y"],alpha=0.05))
+            #calculate correlation
+            print(helpers.pearsonr_ci(df["emp_raw"],df["usage_prob"],alpha=0.05))
 
             # run glm and get predicted values
-            #model = smf.glm(formula='y~x1', data=df, family=sm.families.Binomial()).fit()
             df['const'] = 1
-            model = sm.OLS(endog=df['y'], exog=df[['const','x']]).fit()
+            model = sm.OLS(endog=df['usage_prob'], exog=df[['const','emp_log']]).fit()
 
-            yhat = model.predict()
-            #print(model.summary())
+            usage_prob_pred = model.predict()
             # sort data
-            indx = np.argsort(x1)
-            x1 = x1[indx]
-            y = y[indx]
-            yhat = yhat[indx]
+            indx = np.argsort(emp_raw)
+            emp_raw = emp_raw[indx]
+            usage_prob = usage_prob[indx]
+            usage_prob_pred = usage_prob_pred[indx]
 
             # plot data
-            plt.plot(x1, yhat, linewidth=2, linestyle='-', label='{}'.format(d[1]))
-            plt.plot(x1, y, linewidth=0, marker='.')
+            plt.plot(emp_raw, usage_prob_pred, linewidth=2, linestyle='-', label='{}'.format(d[1]))
+            plt.plot(emp_raw, usage_prob, linewidth=0, marker='.')
 
         # set titles, labels, legends
         #plt.xlabel('log(number of offsprings)')
@@ -404,8 +431,6 @@ class Behavior():
         plt.xscale('log',subsx = [])
         plt.xticks([1,10,100],[1,10,100])
 
-        #plt.xlim(left=0, right=4.5)
-        #plt.ylim(bottom=0, top=1.19)
         plt.ylim(bottom=0, top=119)
         if self.version == 'alchemy2':
             plt.legend(loc='lower left', bbox_to_anchor=(0, 0.85, 1, 0.2), frameon=False, mode='expand', ncol=2)
