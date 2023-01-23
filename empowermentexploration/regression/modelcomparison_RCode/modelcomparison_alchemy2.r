@@ -3,24 +3,23 @@ library(ggplot2)
 
 rm(list=ls())
 
-#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20220824-1210-alchemy2-valuedifferences-human-1.csv") #not matched, like original gametree, with rec and inventory (used gametree from 5.8.21, all files self created - clean)
+la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20220824-1210-alchemy2-valuedifferences-human-1.csv") #not matched, like original gametree, with rec and inventory (used gametree from 5.8.21, all files self created - clean)
 #la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20220825-1119-alchemy2-valuedifferences-human-1.csv") #matched, like original gametree, with rec and inventory (used gametree from 5.8.21, all files self created - clean)
-la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20220826-1046-alchemy2-valuedifferences-human-1.csv") #not matched, new emp model, with rec and inventory (used gametree from 18.5.22, - clean)
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20220826-1046-alchemy2-valuedifferences-human-1.csv") #not matched, new emp model, with rec and inventory (used gametree from 18.5.22, - clean)
+#la2<-read.csv("..\\..\\..\\empowermentexploration\\data\\regression\\20221108-1655-alchemy2-valuedifferences-human-0.csv") #not matched, like original gametree, with rec and inventory (used gametree from 5.8.21, all files self created - clean), no memory
 
 
 la2df<-data.frame(trial=scale(la2$trial),
                   id=paste(la2$id), 
                   inventory=scale(la2$inventory), 
                   cbu=scale(la2$delta_cbu),
-                  rec=scale(la2$delta_rec),
+                  rec=-1*scale(la2$delta_rec),
                   emp=scale(la2$delta_emp),
                   bin=scale(la2$delta_bin),
                   cbv=scale(la2$delta_cbv),
                   truebin=scale(la2$delta_truebin),
                   trueemp=scale(la2$delta_trueemp),
                   decision=la2$decision)
-
-
 
 ## BOTTOM UP ANALYSIS
 # get model with single models as fixed effect

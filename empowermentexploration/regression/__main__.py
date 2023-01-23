@@ -12,7 +12,7 @@ if __name__ == '__main__':
     memory_type = 1
 
     # set game version: alchemy1, alchemy2, tinypixels, tinyalchemy
-    game_version = 'alchemy2'
+    game_version = 'tinyalchemy'
 
     # set vector version
     split_version = 'data'
