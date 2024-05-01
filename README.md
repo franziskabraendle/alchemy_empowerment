@@ -1,7 +1,7 @@
 # Exploration as Empowerment
 
 Project at the Computational Principles for Intelligence lab in Tübingen, GER.
-This code and data can be used to replicate the results from "Intrinsically Motivated Exploration as Empowerment" by Brändle, Stocks, Tenenbaum, Gershman and Schulz.
+This code and data can be used to replicate the results from "Empowerment contributes to exploration behaviour in a creative video game" by Brändle, Stocks, Tenenbaum, Gershman and Schulz.
 
 ## Installation
 Install the requirements from "requirements.txt".
